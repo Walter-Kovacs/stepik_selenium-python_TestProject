@@ -1,6 +1,7 @@
 from pages.base_page import BasePage
 from pages.locators import LoginPageLocators
 
+
 class LoginPage(BasePage):
     def should_be_login_page(self):
         self.should_be_login_url()
@@ -8,7 +9,7 @@ class LoginPage(BasePage):
         self.should_be_register_form()
 
     def should_be_login_url(self):
-        #Проверка на корректный url адрес
+        # Проверка на корректный url адрес
         assert self.browser.current_url.find("login") != -1, "No 'login' substring in url"
 
     def should_be_login_form(self):
