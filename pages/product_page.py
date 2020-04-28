@@ -13,6 +13,10 @@ class ProductPage(BasePage):
     def should_be_message_add_to_basket(self):
         assert self.is_element_present(*ProductPageLocators.MESSAGE_ADD_TO_BASKET), "No message add to basket"
 
+    def should_not_be_message_add_to_basket(self):
+        assert self.is_not_element_present(*ProductPageLocators.MESSAGE_ADD_TO_BASKET),\
+            "Success message is presented, but should not be"
+
     def message_add_to_basket_has_correct_product_name(self):
         product_name = self.browser.find_element(*ProductPageLocators.PRODUCT_NAME).text
         product_name_in_msg = self.browser.find_element(*ProductPageLocators.MESSAGE_ADD_TO_BASKET_PRODUCT_NAME).text
