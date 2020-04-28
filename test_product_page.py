@@ -1,9 +1,38 @@
 import pytest
+import time
 
 from pages.basket_page import BasketPage
 from pages.locators import ProductPageLocators
 from pages.login_page import LoginPage
 from pages.product_page import ProductPage
+
+
+@pytest.mark.user_add_to_basket
+class TestUserAddToBasketFromProductPage:
+    @pytest.fixture(scope="function", autouse=True)
+    def setup(self, browser):
+        login_link = "http://selenium1py.pythonanywhere.com/en-gb/accounts/login/"
+        login_page = LoginPage(browser, login_link)
+        login_page.open()
+        login_page.register_new_user(str(time.time()) + "@notrealmail.com", "123!456!789")
+        login_page.should_be_authorized_user()
+
+    def test_user_cant_see_success_message(self, browser):
+        link = "http://selenium1py.pythonanywhere.com/catalogue/the-shellcoders-handbook_209/"
+        page = ProductPage(browser, link)
+        page.open()
+        page.should_not_be_message_add_to_basket()
+
+    def test_user_can_add_product_to_basket(self, browser):
+        link = "http://selenium1py.pythonanywhere.com/catalogue/the-shellcoders-handbook_209/"
+        page = ProductPage(browser, link)
+        page.open()
+        page.should_be_add_to_basket_button()
+        page.add_to_basket()
+        page.should_be_message_add_to_basket()
+        page.should_be_message_basket_cost()
+        page.message_add_to_basket_has_correct_product_name()
+        page.message_basket_cost_has_correct_price()
 
 
 @pytest.mark.parametrize('link',
