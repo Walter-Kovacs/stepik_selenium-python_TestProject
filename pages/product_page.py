@@ -31,3 +31,7 @@ class ProductPage(BasePage):
         product_price_in_msg = self.browser.find_element(*ProductPageLocators.MESSAGE_BASKET_COST_PRICE).text
         assert product_price == product_price_in_msg,\
             f"Product price in message '{product_price_in_msg}' does not match product price '{product_price}'"
+
+    def message_add_to_basket_is_disappeared(self):
+        assert self.is_disappeared(
+            *ProductPageLocators.MESSAGE_ADD_TO_BASKET), "Add to basket message is not disappeared"
